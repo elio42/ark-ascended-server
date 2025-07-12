@@ -11,6 +11,8 @@ services:
       - SERVER_ADMIN_PASSWORD=AlsoChangeMe
       - GAME_PORT=7777
       - RCON_PORT=27020
+      - PUID=10000
+      - PGID=10000
     volumes:
       - ark-persistent-data:/home/steam/ark/ShooterGame/Saved
 

@@ -20,3 +20,5 @@ env:
   mods: ""
   extraFlags: ""
   extraSettings: ""
+  puid: 10000
+  pgid: 10000

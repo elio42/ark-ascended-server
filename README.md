@@ -1,4 +1,11 @@
 # ark-ascended-server
+
+## Notes about this fork:
+
+I changed the image to respect the enviroment variables `PUID` and `GUID`. This way it is not imperative that the files on your system are owned by 10000:10000. But please do make sure that the files are owned by whatever user you specify.
+
+## Info:
+
 [![Static Badge](https://img.shields.io/badge/DockerHub-blue)](https://hub.docker.com/r/sknnr/ark-ascended-server) ![Docker Pulls](https://img.shields.io/docker/pulls/sknnr/ark-ascended-server) [![Static Badge](https://img.shields.io/badge/GitHub-green)](https://github.com/jsknnr/ark-ascended-server) ![GitHub Repo stars](https://img.shields.io/github/stars/jsknnr/ark-ascended-server)
 
 Containerized Ark: Survival Ascended server
@@ -141,4 +148,4 @@ If you are having issues connecting to the server once the container is deployed
 
 ### Storage
 
-I recommend having Docker or Podman manage the volume that gets mounted into the container. However, if you absolutely must bind mount a directory into the container you need to make sure that on your container host the directory you are bind mounting is owned by 10000:10000 by default (`chown -R 10000:10000 /path/to/directory`). If the ownership of the directory is not correct the container will not start as the server will be unable to persist the savegame.
+I recommend having Docker or Podman manage the volume that gets mounted into the container. ~~However, if you absolutely must bind mount a directory into the container you need to make sure that on your container host the directory you are bind mounting is owned by 10000:10000 by default (`chown -R 10000:10000 /path/to/directory`). If the ownership of the directory is not correct the container will not start as the server will be unable to persist the savegame.~~ With this fork you may pass the arguments PUID and GUID to the container. This way, if you bind mount a directory, you may choose yourself who owns the file. Just make sure that the user that owns the files is also the user that you pass into the container.

@@ -24,9 +24,9 @@ spec:
         release: "{{ .Release.Name }}"
     spec:
       securityContext:
-        runAsUser: 10000
-        runAsGroup: 10000
-        fsGroup: 10000
+        runAsUser: {{ .Values.env.puid}}
+        runAsGroup: {{ .Values.env.pgid }}
+        fsGroup: {{ .Values.env.pgid }}
       containers:
       - name: "{{ .Chart.Name }}-server"
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -60,6 +60,10 @@ spec:
         - name: EXTRA_SETTINGS
           value: {{ .Values.env.extraSettings }}
         {{- end }}
+        - name: PUID
+          value: {{ .Values.env.puid | quote }}
+        - name: PGID
+          value: {{ .Values.env.pgid | quote }}
         ports:
         - name: game-port
           containerPort: {{ .Values.env.gamePort | int }}

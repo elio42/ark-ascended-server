@@ -3,8 +3,8 @@ FROM debian:12-slim
 ARG IMAGE_VERSION="v1.0.0-devel"
 ARG MAINTAINER="https://github.com/jsknnr/ark-ascended-server"
 
-ARG CONTAINER_GID=10000
-ARG CONTAINER_UID=10000
+ARG PGID=10000
+ARG PUID=10000
 
 ENV DEBIAN_FRONTEND "noninteractive"
 ENV STEAM_APP_ID "2430930"
@@ -16,8 +16,8 @@ ENV GE_PROTON_URL "https://github.com/GloriousEggroll/proton-ge-custom/releases/
 ENV STEAM_COMPAT_CLIENT_INSTALL_PATH "${STEAM_PATH}"
 ENV STEAM_COMPAT_DATA_PATH "${STEAM_PATH}/steamapps/compatdata/${STEAM_APP_ID}"
 
-RUN groupadd -g $CONTAINER_GID steam \
-    && useradd -g $CONTAINER_GID -u $CONTAINER_UID -m steam \
+RUN groupadd -g $PGID steam \
+    && useradd -g $PGID -u $PUID -m steam \
     && sed -i 's#^Components: .*#Components: main non-free contrib#g' /etc/apt/sources.list.d/debian.sources \
     && echo steam steam/question select "I AGREE" | debconf-set-selections \
     && echo steam steam/license note '' | debconf-set-selections \
@@ -66,7 +66,7 @@ RUN mkdir "$ARK_PATH" \
     && rm "/home/steam/GE-Proton${GE_PROTON_VERSION}.tgz" \
     && echo "${IMAGE_VERSION}" > /home/steam/image_version \
     && echo "${MAINTAINER}" > /home/steam/image_maintainer \
-    && echo "${CONTAINER_UID}:${CONTAINER_GID}" > /home/steam/expected_filesystem_permissions
+    && echo "${PUID}:${PGID}" > /home/steam/expected_filesystem_permissions
     
 COPY entrypoint.sh /home/steam/entrypoint.sh
 
